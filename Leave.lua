@@ -28,12 +28,18 @@ _addon.author = 'Daneblood'
 _addon.version = '23.3.19'
 _addon.command = 'Leave'
 
-require('resources')
 res = require('resources')
 
 
+local chatColor = 123
 
-
+local items_by_zone = {
+	[129] = 'Input /item "Hiatus Whistle" <me>',
+	[133] = 'Input /item "Obsid. Wing" <me>',
+	[271] = 'Input /item "Ontic Extremity" <me>',
+	[275] = 'Input /item "Ontic Extremity" <me>',
+	[294] = 'Input /item "Black hourglass " <me>',
+	}
 
 windower.register_event('addon command', function(...)
     local args = T{...}
@@ -44,29 +50,13 @@ windower.register_event('addon command', function(...)
         windower.send_ipc_message('Leave_all')
 	end
 
-	if var_thiszone == 78 then -- Einhejar
+	if items_by_zone[var_thiszone] then
 		greeting()
+		windower.send_command(items_by_zone[var_thiszone])
+	elseif var_thiszone == 78 then -- Einhejar
+		greeting()
+		-- this won't work if treasury is set to a delay higher than 0.9s
 		windower.send_command('Treasury drop add "Glowing lamp";wait 1;Treasury drop remove "Glowing lamp"')
-
-	elseif var_thiszone == 129 then -- Meeble Burrows
-		greeting()
-		windower.send_command('Input /item "Hiatus Whistle" <me>')
-
-	elseif var_thiszone == 133 then -- Sortie
-		greeting()
-		windower.send_command('Input /item "Obsid. Wing" <me>')
-
-	elseif var_thiszone == 271 then -- Incursion & Delve
-		greeting()
-		windower.send_command('Input /item "Ontic Extremity" <me>')
-
-	elseif var_thiszone == 275 or var_thiszone == 189 then -- Vagary
-		greeting()
-		windower.send_command('Input /item "Ontic Extremity" <me>')
-	
-	elseif var_thiszone == 294 or var_thiszone == 295 or var_thiszone == 296 or var_thiszone == 297 then -- Dynamis Divergence
-		greeting()
-		windower.send_command('Input /item "Black hourglass " <me>')
 
 	elseif var_thiszone == 298 then -- Odyssey & HTMB: A Stygian Pact, Champion of the Dawn, Divine Interference, Maiden of the Dusk
 		greeting()
@@ -81,7 +71,6 @@ windower.register_event('addon command', function(...)
 end)
 
 
-
 windower.register_event('ipc message',function (msg)
     if msg == 'Leave_all' then
 		windower.send_command('Leave')
@@ -89,41 +78,16 @@ windower.register_event('ipc message',function (msg)
 end)
 
 
+local greetings = {
+	'See you later, Alligator', 'Gotta run, Skeleton', 'See you soon, Baboon', 'Gotta go, Buffalo', 'Out the door, Dinosaur', 'Chop chop, Lolipop', 'Better swish, Jellyfish', 'Bye bye, Butterfly', 'Toodaloo, Kangaroo', 'Blow a kiss, Goldfish', 'Goodbye hug, LadyBug', 'Hit the trail, Tiny Snail', 'Gotta scram, Litle Lamb', 'Take care, Polar Bear'
+}
 
 function greeting()
 	windower.send_command('tr passall"')
 	windower.send_command('roller off"')
 	windower.send_command('cpaddon cmd stop"')
 
-	local var_random = math.random(1,14)
-	if var_random == 1 then
-		windower.add_to_chat(chatColor, 'See you later, Alligator')
-	elseif var_random == 2 then
-		windower.add_to_chat(chatColor, 'Gotta run, Skeleton')
-	elseif var_random == 3 then
-		windower.add_to_chat(chatColor, 'See you soon, Baboon')
-	elseif var_random == 4 then
-		windower.add_to_chat(chatColor, 'Gotta go, Buffalo')
-	elseif var_random == 5 then
-		windower.add_to_chat(chatColor, 'Out the door, Dinosaur')
-	elseif var_random == 6 then
-		windower.add_to_chat(chatColor, 'Chop chop, Lolipop')
-	elseif var_random == 7 then
-		windower.add_to_chat(chatColor, 'Better swish, Jellyfish')
-	elseif var_random == 8 then
-		windower.add_to_chat(chatColor, 'Bye bye, Butterfly')
-	elseif var_random == 9 then
-		windower.add_to_chat(chatColor, 'Toodle-loo, Kangaroo')
-	elseif var_random == 10 then
-		windower.add_to_chat(chatColor, 'Blow a kiss, Goldfish')
-	elseif var_random == 11 then
-		windower.add_to_chat(chatColor, 'Goodbye hug, LadyBug')
-	elseif var_random == 12 then
-		windower.add_to_chat(chatColor, 'Hit the trail, Tiny Snail')
-	elseif var_random == 13 then
-		windower.add_to_chat(chatColor, 'Gotta scram, Litle Lamb')
-	elseif var_random == 14 then
-		windower.add_to_chat(chatColor, 'Take care, Polar Bear')
-	end
+	local var_random = math.random(1,#greetings)
+	windower.add_to_chat(chatColor,greetings[var_random])
 end
 
