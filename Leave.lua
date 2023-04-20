@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 _addon.name = 'Leave'
 _addon.author = 'Daneblood'
-_addon.version = '23.3.19'
+_addon.version = '23.4.20'
 _addon.command = 'Leave'
 
 require('resources')
@@ -44,9 +44,107 @@ windower.register_event('addon command', function(...)
         windower.send_ipc_message('Leave_all')
 	end
 
-	if var_thiszone == 78 then -- Einhejar
+
+	if var_thiszone == 55 then  -- Assaults
 		greeting()
-		windower.send_command('Treasury drop add "Glowing lamp";wait 1;Treasury drop remove "Glowing lamp"')
+		windower.send_command('Input /item "Reef Fireflies" <me>')
+
+	elseif var_thiszone == 73 then -- Zhayolm Remnants
+		greeting()
+		drop_item(5365)
+		drop_item(5366)
+		drop_item(5367)
+		drop_item(5368)
+		drop_item(5369)
+		drop_item(5370)
+		drop_item(5371)
+		drop_item(5372)
+		drop_item(5373)
+		drop_item(5374)
+		drop_item(5375)
+		drop_item(5376)
+		drop_item(5377)
+		drop_item(5378)
+		drop_item(5379)
+		drop_item(5380)
+		drop_item(5381)
+		drop_item(5382)
+		drop_item(5383)
+		windower.send_command('Input /item "z. rem. fireflies" <me>')
+
+	elseif var_thiszone == 74 then -- Arrapago Remnants
+		greeting()
+		drop_item(5365)
+		drop_item(5366)
+		drop_item(5367)
+		drop_item(5368)
+		drop_item(5369)
+		drop_item(5370)
+		drop_item(5371)
+		drop_item(5372)
+		drop_item(5373)
+		drop_item(5374)
+		drop_item(5375)
+		drop_item(5376)
+		drop_item(5377)
+		drop_item(5378)
+		drop_item(5379)
+		drop_item(5380)
+		drop_item(5381)
+		drop_item(5382)
+		drop_item(5383)
+		windower.send_command('Input /item "a. rem. fireflies" <me>')
+
+	elseif var_thiszone == 75 then -- Bhaflau Remnants
+		greeting()
+		drop_item(5365)
+		drop_item(5366)
+		drop_item(5367)
+		drop_item(5368)
+		drop_item(5369)
+		drop_item(5370)
+		drop_item(5371)
+		drop_item(5372)
+		drop_item(5373)
+		drop_item(5374)
+		drop_item(5375)
+		drop_item(5376)
+		drop_item(5377)
+		drop_item(5378)
+		drop_item(5379)
+		drop_item(5380)
+		drop_item(5381)
+		drop_item(5382)
+		drop_item(5383)
+		windower.send_command('Input /item "b. rem. fireflies" <me>')
+
+	elseif var_thiszone == 76 then -- Silver Sea Remnants
+		greeting()
+		drop_item(5365)
+		drop_item(5366)
+		drop_item(5367)
+		drop_item(5368)
+		drop_item(5369)
+		drop_item(5370)
+		drop_item(5371)
+		drop_item(5372)
+		drop_item(5373)
+		drop_item(5374)
+		drop_item(5375)
+		drop_item(5376)
+		drop_item(5377)
+		drop_item(5378)
+		drop_item(5379)
+		drop_item(5380)
+		drop_item(5381)
+		drop_item(5382)
+		drop_item(5383)
+		windower.send_command('Input /item "s. rem. fireflies" <me>')
+
+
+	elseif var_thiszone == 78 then -- Einhejar
+		greeting()
+		drop_item(5414)
 
 	elseif var_thiszone == 129 then -- Meeble Burrows
 		greeting()
@@ -63,6 +161,10 @@ windower.register_event('addon command', function(...)
 	elseif var_thiszone == 275 or var_thiszone == 189 then -- Vagary
 		greeting()
 		windower.send_command('Input /item "Ontic Extremity" <me>')
+
+	elseif var_thiszone == 292 then
+		greeting()
+		windower.send_command('Input /item "reisenjima cage" <me>')
 	
 	elseif var_thiszone == 294 or var_thiszone == 295 or var_thiszone == 296 or var_thiszone == 297 then -- Dynamis Divergence
 		greeting()
@@ -127,3 +229,13 @@ function greeting()
 	end
 end
 
+
+function drop_item(var_item)
+    local inventory = windower.ffxi.get_items(0)
+    for i=1,inventory.max do
+        if inventory[i].id == var_item then
+            windower.ffxi.drop_item(i,1)
+            return
+        end
+    end
+end
