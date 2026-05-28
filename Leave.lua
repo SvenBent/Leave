@@ -25,9 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 _addon.name = 'Leave'
 _addon.author = 'Daneblood'
-_addon.version = '23.4.20'
+_addon.version = '26.05.28'
 _addon.command = 'Leave'
 
+extdata = require('extdata')
 require('resources')
 res = require('resources')
 
@@ -36,166 +37,104 @@ res = require('resources')
 
 
 windower.register_event('addon command', function(...)
-    local args = T{...}
-    local cmd = args[1]
+
 	local var_thiszone = windower.ffxi.get_info()['zone']
+	local args = T{...}
+    local cmd = args[1]
+	local greet = true
+
+
 
     if cmd == 'all' then
-        windower.send_ipc_message('Leave_all')
+        windower.send_ipc_message('leaveall')
 	end
 
 
+
 	if var_thiszone == 55 then  -- Assaults
-		greeting()
 		windower.send_command('Input /item "Reef Fireflies" <me>')
 
 	elseif var_thiszone == 73 then -- Zhayolm Remnants
-		greeting()
-		drop_item(5365)
-		drop_item(5366)
-		drop_item(5367)
-		drop_item(5368)
-		drop_item(5369)
-		drop_item(5370)
-		drop_item(5371)
-		drop_item(5372)
-		drop_item(5373)
-		drop_item(5374)
-		drop_item(5375)
-		drop_item(5376)
-		drop_item(5377)
-		drop_item(5378)
-		drop_item(5379)
-		drop_item(5380)
-		drop_item(5381)
-		drop_item(5382)
-		drop_item(5383)
+		CleanUp_Salvage()
 		windower.send_command('Input /item "z. rem. fireflies" <me>')
 
 	elseif var_thiszone == 74 then -- Arrapago Remnants
-		greeting()
-		drop_item(5365)
-		drop_item(5366)
-		drop_item(5367)
-		drop_item(5368)
-		drop_item(5369)
-		drop_item(5370)
-		drop_item(5371)
-		drop_item(5372)
-		drop_item(5373)
-		drop_item(5374)
-		drop_item(5375)
-		drop_item(5376)
-		drop_item(5377)
-		drop_item(5378)
-		drop_item(5379)
-		drop_item(5380)
-		drop_item(5381)
-		drop_item(5382)
-		drop_item(5383)
+		CleanUp_Salvage()
 		windower.send_command('Input /item "a. rem. fireflies" <me>')
 
 	elseif var_thiszone == 75 then -- Bhaflau Remnants
-		greeting()
-		drop_item(5365)
-		drop_item(5366)
-		drop_item(5367)
-		drop_item(5368)
-		drop_item(5369)
-		drop_item(5370)
-		drop_item(5371)
-		drop_item(5372)
-		drop_item(5373)
-		drop_item(5374)
-		drop_item(5375)
-		drop_item(5376)
-		drop_item(5377)
-		drop_item(5378)
-		drop_item(5379)
-		drop_item(5380)
-		drop_item(5381)
-		drop_item(5382)
-		drop_item(5383)
+		CleanUp_Salvage()
 		windower.send_command('Input /item "b. rem. fireflies" <me>')
 
 	elseif var_thiszone == 76 then -- Silver Sea Remnants
-		greeting()
-		drop_item(5365)
-		drop_item(5366)
-		drop_item(5367)
-		drop_item(5368)
-		drop_item(5369)
-		drop_item(5370)
-		drop_item(5371)
-		drop_item(5372)
-		drop_item(5373)
-		drop_item(5374)
-		drop_item(5375)
-		drop_item(5376)
-		drop_item(5377)
-		drop_item(5378)
-		drop_item(5379)
-		drop_item(5380)
-		drop_item(5381)
-		drop_item(5382)
-		drop_item(5383)
+		CleanUp_Salvage()
 		windower.send_command('Input /item "s. rem. fireflies" <me>')
 
-
 	elseif var_thiszone == 78 then -- Einhejar
-		greeting()
+		windower.send_command('Timers c Einhejar 3600')
 		drop_item(5414)
+	
+	elseif var_thiszone == 86 or var_thiszone == 93 then -- Meeble Burrows 
+		windower.send_command('Input /item "Hiatus Whistle" <me>') -- Meeble Burrows (Bosses)
 
-	elseif var_thiszone == 129 then -- Meeble Burrows
-		greeting()
-		windower.send_command('Input /item "Hiatus Whistle" <me>')
+	elseif var_thiszone == 129 then -- Meeble Burrows & Maze monger
+		windower.send_command('Input /item "Hiatus Whistle" <me>') -- Meeble Burrows
+		windower.send_command('Input /item "Maze compass" <me>') -- Maze mongerMaze monger
 
 	elseif var_thiszone == 133 then -- Sortie
-		greeting()
 		windower.send_command('Input /item "Obsid. Wing" <me>')
+	
+	elseif var_thiszone == 264 then --  Delve - Skirmish
+		windower.send_command('Input /item "Ontic Extremity" <me>')
+		windower.send_command('Input /item "Farewell Fly" <me>')
 
 	elseif var_thiszone == 271 then -- Incursion & Delve
-		greeting()
-		windower.send_command('Input /item "Ontic Extremity" <me>')
+		windower.send_command('puts gr. velkk coffer case;wait 1;puts gr. velkk coffer sack;wait 1;puts gr. velkk coffer satchel;wait 1;Input /item "Ontic Extremity" <me>')
 
 	elseif var_thiszone == 275 or var_thiszone == 189 then -- Vagary
-		greeting()
 		windower.send_command('Input /item "Ontic Extremity" <me>')
 
 	elseif var_thiszone == 292 then
-		greeting()
 		windower.send_command('Input /item "reisenjima cage" <me>')
 	
 	elseif var_thiszone == 294 or var_thiszone == 295 or var_thiszone == 296 or var_thiszone == 297 then -- Dynamis Divergence
-		greeting()
-		windower.send_command('Input /item "Black hourglass " <me>')
+		windower.send_command('Input /item "Black hourglass" <me>')
 
-	elseif var_thiszone == 298 then -- Odyssey & HTMB: A Stygian Pact, Champion of the Dawn, Divine Interference, Maiden of the Dusk
-		greeting()
-		windower.send_command('Input /item "moglophone II" <me>') -- Odyssey
+	elseif var_thiszone == 298 or var_thiszone == 279 then -- Odyssey & HTMB: A Stygian Pact, Champion of the Dawn, Divine Interference, Maiden of the Dusk
+		windower.send_command('Input /item "Moglophone II" <me>') -- Odyssey GAOL
 		windower.send_command('Input /item "V. Con. Shard" <me>') -- HTMB: A Stygian Pact, Champion of the Dawn, Divine Interference, Maiden of the Dusk
 
 	else
 		windower.add_to_chat(chatColor, 'This location is unknown. Unable to leave')
+		windower.add_to_chat(chatColor, var_thiszone)
+		greet = false
 	end
 
+
+	
+	if greet==true then
+		greeting()
+	end
 
 end)
 
 
 
 windower.register_event('ipc message',function (msg)
-    if msg == 'Leave_all' then
-		windower.send_command('Leave')
+    if msg == 'leaveall' then
+		windower.send_command('leave')
     end
 end)
 
 
 
 function greeting()
-	windower.send_command('tr passall"')
-	windower.send_command('roller off"')
-	windower.send_command('cpaddon cmd stop"')
+	windower.send_command('tr passall')
+	
+	if windower.ffxi.get_player().status == 33 then
+		windower.send_command('input /heal')	
+	end
+
 
 	local var_random = math.random(1,14)
 	if var_random == 1 then
@@ -203,7 +142,7 @@ function greeting()
 	elseif var_random == 2 then
 		windower.add_to_chat(chatColor, 'Gotta run, Skeleton')
 	elseif var_random == 3 then
-		windower.add_to_chat(chatColor, 'See you soon, Baboon')
+		windower.add_to_chat(chatColor, 'See you soon, Baby Baboon')
 	elseif var_random == 4 then
 		windower.add_to_chat(chatColor, 'Gotta go, Buffalo')
 	elseif var_random == 5 then
@@ -238,4 +177,38 @@ function drop_item(var_item)
             return
         end
     end
+end
+
+
+function drop_items(var_item)
+    local inventory = windower.ffxi.get_items(0)
+    for i = 1, inventory.max do
+        local slot = inventory[i]
+        if slot and slot.id == var_item and slot.count > 0 then
+            windower.ffxi.drop_item(i, slot.count)
+        end
+    end
+end
+
+
+function CleanUp_Salvage()
+	drop_items(5365)
+	drop_items(5366)
+	drop_items(5367)
+	drop_items(5368)
+	drop_items(5369)
+	drop_items(5370)
+	drop_items(5371)
+	drop_items(5372)
+	drop_items(5373)
+	drop_items(5374)
+	drop_items(5375)
+	drop_items(5376)
+	drop_items(5377)
+	drop_items(5378)
+	drop_items(5379)
+	drop_items(5380)
+	drop_items(5381)
+	drop_items(5382)
+	drop_items(5383)
 end
